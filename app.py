@@ -49,14 +49,14 @@ def getAthlete(id):
         athlete["height"] = 1.7
         athlete["kmPerHour"] = 32.27
     elif id == "2":
-        athlete["photo"] = "http://www.alagoas24horas.com.br/wp-content/uploads/2017/01/Messi.jpg"
+        athlete["photo"] = "http://images.performgroup.com/di/library/GOAL_INTERNATIONAL/11/a1/uefa-team-of-the-year-andres-iniesta_180syh14bzf51sks6lb2qvyvb.jpg?t=-2017137824&w=620&h=430"
         athlete["name"] = "Andrés Iniesta Luján"
         athlete["weight"] = 68
         athlete["height"] = 1.7
         athlete["kmPerHour"] = 31.62
     elif id == "3":
         #33,52
-        athlete["photo"] = "http://www.alagoas24horas.com.br/wp-content/uploads/2017/01/Messi.jpg"
+        athlete["photo"] = "http://s.weltsport.net/bilder/spieler/gross/27798.jpg"
         athlete["name"] = "Gerard Piqué Bernabéu"
         athlete["weight"] = 85
         athlete["height"] = 1.9
