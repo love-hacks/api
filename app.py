@@ -79,9 +79,9 @@ def getAthlete(id):
 
 @app.route("/api/v1/athletes/races", methods=['GET'])
 def getRacesByAttributes():
-    distance = request.args.get("distance")
+    distance = float(request.args.get("distance"))
     speed = request.args.get("speed")
-    time = request.args.get("time")
+    time = float(request.args.get("time"))*60
 
     if (speed and distance) or (not speed and not distance):
         error_message = {"status": "Bad request", "code": 400, "description": "Invalid options!"}
