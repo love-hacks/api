@@ -79,9 +79,10 @@ def getAthlete(id):
 
 @app.route("/api/v1/athletes/races", methods=['GET'])
 def getRacesByAttributes():
-    distance = float(request.args.get("distance"))
+    distance = request.args.get("distance")
     speed = request.args.get("speed")
-    time = float(request.args.get("time"))*60
+    print speed
+    time = request.args.get("time")
 
     if (speed and distance) or (not speed and not distance):
         error_message = {"status": "Bad request", "code": 400, "description": "Invalid options!"}
@@ -89,7 +90,7 @@ def getRacesByAttributes():
     if (distance and not time):
         error_message = {"status": "Bad request", "code": 400, "description": "Invalid parameter(s): Distance and time are required"}
         return jsonify(error_message)
-
+    
     result = {
         "previous" : None,
         "next" : None
@@ -123,19 +124,19 @@ def getRacesByAttributes():
             print "1"
             result["previous"] = {}
             result["next"] = getIniesta()
-        elif float(31.62) <= speed < float(32.27):
+        elif 31.62 <= speed < 32.27:
             print "2"
             result["previous"] = getIniesta()
             result["next"] = getMessi()
-        elif float(32.27) <= speed < float(33.52):
+        elif float(32.27) <= speed < 33.52:
             print "3"
             result["previous"] = getMessi()
             result["next"] = getPique()
-        elif float(33.52) <= speed < float(34):
+        elif 33.52 <= float(speed) < 34:
             print "4"
             result["previous"] = getPique()
             result["next"] = getNeymar()
-        elif speed >= float(34):
+        elif speed >= 34:
             print "5"
             result["previous"] = getNeymar()
             result["next"] = {}
