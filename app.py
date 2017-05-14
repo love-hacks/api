@@ -77,14 +77,17 @@ def getAthlete(id):
     else:
         return jsonify([])
 
-@app.route("/api/v1/athletes/races/", methods=['GET'])
+@app.route("/api/v1/athletes/races", methods=['GET'])
 def getRacesByAttributes():
     distance = request.args.get("distance")
     speed = request.args.get("speed")
     time = request.args.get("time")
 
-    if time and distance:
+    if (speed and distance) or (not speed and not distance):
         error_message = {"status": "Bad request", "code": 400, "description": "Invalid options!"}
+        return jsonify(error_message)
+    if (distance and not time):
+        error_message = {"status": "Bad request", "code": 400, "description": "Invalid parameter(s): Distance and time are required"}
         return jsonify(error_message)
 
     result = {
@@ -92,7 +95,8 @@ def getRacesByAttributes():
         "next" : None
     }
 
-    if time:
+    if distance:
+        print "entru em em distance"
         pique_distance = 33.52*time
         iniesta_distance = 31.62*time
         messi_distance = 32.27*time
@@ -113,19 +117,26 @@ def getRacesByAttributes():
             result["previous"] = getNeymar()
             result["next"] = {}
     else:
-        if speed < 31.62:
+        print "entrou em speed"
+        print
+        if float(speed) < 31.62:
+            print "1"
             result["previous"] = {}
             result["next"] = getIniesta()
-        elif 31.62 <= speed < 32.27:
+        elif float(31.62) <= speed < float(32.27):
+            print "2"
             result["previous"] = getIniesta()
             result["next"] = getMessi()
-        elif 32.27 <= speed < 33.52:
+        elif float(32.27) <= speed < float(33.52):
+            print "3"
             result["previous"] = getMessi()
             result["next"] = getPique()
-        elif 33.52 <= speed < 34:
+        elif float(33.52) <= speed < float(34):
+            print "4"
             result["previous"] = getPique()
             result["next"] = getNeymar()
-        elif speed >= 34:
+        elif speed >= float(34):
+            print "5"
             result["previous"] = getNeymar()
             result["next"] = {}
 
