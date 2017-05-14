@@ -79,18 +79,22 @@ def getAthlete(id):
 
 @app.route("/api/v1/athletes/races", methods=['GET'])
 def getRacesByAttributes():
-    distance = request.args.get("distance")
-    speed = request.args.get("speed")
-    print speed
-    time = request.args.get("time")
-
+    distance = None
+    speed = None
+    time = None
+    try:
+        distance = request.args.get("distance")
+        speed = float(request.args.get("speed"))
+        time = request.args.get("time")
+    except:
+        print "Algo de errado não deu certo"
     if (speed and distance) or (not speed and not distance):
         error_message = {"status": "Bad request", "code": 400, "description": "Invalid options!"}
         return jsonify(error_message)
     if (distance and not time):
         error_message = {"status": "Bad request", "code": 400, "description": "Invalid parameter(s): Distance and time are required"}
         return jsonify(error_message)
-    
+
     result = {
         "previous" : None,
         "next" : None
