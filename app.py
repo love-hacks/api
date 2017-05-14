@@ -83,13 +83,24 @@ def getRacesByAttributes():
     speed = None
     time = None
     try:
-        distance = request.args.get("distance")
-        speed = float(request.args.get("speed"))
-        time = request.args.get("time")
+        distance = float(request.args.get("distance"))
     except:
-        print "Algo de errado não deu certo"
-    if (speed and distance) or (not speed and not distance):
-        error_message = {"status": "Bad request", "code": 400, "description": "Invalid options!"}
+        print "Algo de errado não deu certo com distance"
+    try:
+        speed = float(request.args.get("speed"))
+    except:
+        print "Algo de errado não deu certo com speed"
+    try:
+        time = float(request.args.get("time"))
+        time = time/60
+    except:
+        print "Algo de errado nao deu certo com time"
+
+    if (speed is not None and distance is not None):
+        error_message = {"status": "Bad request", "code": 400, "description": "Invalid options"}
+        return jsonify(error_message)
+    if (speed is None and distance is None):
+        error_message = {"status": "Bad request", "code": 400, "description": "Invalid options"}
         return jsonify(error_message)
     if (distance and not time):
         error_message = {"status": "Bad request", "code": 400, "description": "Invalid parameter(s): Distance and time are required"}
@@ -100,12 +111,13 @@ def getRacesByAttributes():
         "next" : None
     }
 
-    if distance:
+    if distance is not None:
         print "entru em em distance"
         pique_distance = 33.52*time
         iniesta_distance = 31.62*time
         messi_distance = 32.27*time
         neymar_distance = 34.83*time
+        print distance
         if distance < iniesta_distance:
             result["previous"] = {}
             result["next"] = getIniesta()
